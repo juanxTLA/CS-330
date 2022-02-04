@@ -2,6 +2,8 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include <string>
+
 struct Coord{
     float x, z;
 };
@@ -24,8 +26,17 @@ class Character{
         rad orientation;
         SteeringBehavior steeringBehavior;
         bool colided;
+        int target;
 
+    public:
 
+        Character(int uid, Coord vel, Coord position, Coord acc, rad orien, SteeringBehavior steer, bool col, int targ);
+        
+        std::string printInfo();
+        
+        void update();
+
+        Coord getPos();
 };
 
 #endif

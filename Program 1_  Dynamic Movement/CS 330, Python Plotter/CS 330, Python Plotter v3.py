@@ -17,7 +17,7 @@ import math
 
 
 # Change this to data file name
-filename = "CS 330, Dynamic 16, Trajectory data.txt" 
+filename = "test.txt" 
 
 #************************** Setup Plotting Axis ****************************
 xLineX = [-100, 100]
@@ -53,7 +53,7 @@ with open(filename, 'r') as csvfile:
        
         #as we find other 
         if( row[1] not in movers):                  # row[1] holds the id of the Mover
-            movers[row[1]] = Mover(int(row[9]))     # if we don't have a Mover object for a particular id yet,
+            movers[row[1]] = Mover(int(float(row[9])))     # if we don't have a Mover object for a particular id yet,
                                                     # we create one and add it to the dictionary
         
         m = movers[row[1]]
@@ -76,6 +76,7 @@ for mov in movers:                  # for each mover
         j = [m.z[c], m.vZp[c]]          # current z, current z + z velocity
         
         plt.plot(i, j, color='#5beb34', linewidth=0.5)  #green
+        plt.show()
 
     for c in range(0, len(m.x)):    # Plot linear acceleration data
         i = [m.x[c], m.laXp[c]]         # current x, current x + x linear acceleration
