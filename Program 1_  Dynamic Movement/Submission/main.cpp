@@ -1,14 +1,19 @@
 #include "character.cpp"
-#include "dynamic.cpp"
-#include <fstream>
-#include <iostream>
-#include <unordered_map>
-#include <vector>
-
-
-#define PI  3.1416
+#include "helper.hpp"
 
 using namespace std;
+struct Dynamic{
+
+    Coord seek(Character *target, Character mover){
+        Coord linear = target->getPos() - mover.getPos();
+        linear.normalize();
+        linear = linear * mover.getMaxLinear();
+
+        return linear;
+    }
+};
+
+
 
 int main(){
     ofstream outFile;
@@ -17,8 +22,10 @@ int main(){
 
     //Create continue character
     Character cont = Character(2601, {0,0}, {0,0}, {0,0}, 0, CONTINUE, false, NULL, 0,0);
+    //Create flee character
+
     //create seek character
-    Character seek = Character(2603, {2,7}, {-50,40}, {0,0}, PI/4, SEEK, false, &cont, 2, 8);
+    Character seek = Character(2603, {0,8}, {-50,40}, {0,0}, PI/4, SEEK, false, &cont, 2, 8);
 
     record.push_back(cont);
     record.push_back(seek);
@@ -32,7 +39,7 @@ int main(){
     double stopTime = 50;
 
     string info;
-
+    seek.update(0,seek.getLinear(), seek.getOrientation());
     while(time < stopTime){
         time += deltaTime;
         for(int i = 0; i < record.size(); i++){

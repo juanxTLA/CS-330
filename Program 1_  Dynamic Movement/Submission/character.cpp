@@ -22,11 +22,15 @@ Character::Character(int uid, Coord vel, Coord position, Coord acc,
 void Character::update(float deltaTime, Coord linear, rad angle){
     pos = pos + (velocity * deltaTime);
     velocity = velocity + (linear * deltaTime);
-   // if(velocity.mod > maxVelocity){
-      // velocity = velocity.normalize() * maxVelocity;
-    //} 
-    orientation = angle;
+    if(mod(velocity) > maxVelocity){
+        velocity.normalize();
+        velocity = velocity * maxVelocity;
+    } 
+
+
     acceleration = linear;
+    orientation = angle;
+    
 }
 
 Coord Character::getPos(){
@@ -47,6 +51,14 @@ Character* Character::getTarget(){
 
 SteeringBehavior Character::getSteeringBehavior(){
     return steeringBehavior;
+}
+
+Coord Character::getLinear(){
+    return acceleration;
+}
+
+rad Character::getOrientation(){
+    return orientation;
 }
 
 std::string Character::printInfo(){
