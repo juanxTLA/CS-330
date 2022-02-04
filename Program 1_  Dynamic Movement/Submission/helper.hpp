@@ -8,6 +8,8 @@
 #include <math.h>
 
 #define PI  3.1416
+#define MIN_VEL 0.02
+
 typedef float rad;
 
 struct Coord{
@@ -50,6 +52,14 @@ inline Coord operator*(Coord const &a, float scalar){
     Coord res;
     res.x = a.x * scalar;
     res.z = a.z * scalar;
+
+    return res;
+}
+
+inline Coord operator/(Coord const &a, float scalar){
+    Coord res;
+    res.x = a.x / scalar;
+    res.z = a.z / scalar;
 
     return res;
 }

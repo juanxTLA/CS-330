@@ -1,0 +1,110 @@
+Author: Anonymous
+Date:   02/12/20 (Last Updated)
+
+---------------------------------------------------------------------------------
+
+The folder CS 330, Matlab Plotter contains 2 scripts
+	-cs330_simple_plot.m
+	-cs330_plot_caller.m
+
+cs330_simple_plot.m
+	This is the function that plots a png and/or gif
+	Move this file to the same folder as your trajectories files.
+	The output of this function will be contained in a folder
+	titled 'simple_plot_output'.
+	
+	Use 'help cs330_simple_plot' in the matlab terminal to read
+	the documentation for the function
+
+	Note* This function can take ~225+ seconds of time to run
+	if you're plotting at least 2 characters with a 0.25 second
+	time step
+
+cs330_plot_caller.m
+	This is an example matlab script showing how to call the function.
+	Move this file to the same folder as the plot function and the 
+	trajectories files.
+	
+	Simply edit the predeclared variables to your likeling and run.
+
+
+---------------------------------------------------------------------------------
+
+Below is the output when you run 'help cs330_simple_plot'
+
+>> help cs330_simple_plot
+ cs330_simple_plot  Plotter for CS330   
+ Author: Anonymous    Date: 02/12/20 (Last Updated)
+ 
+    cs330_simple_plot(trajectoryFile, PVLO, gif, plotTitle, vectorScaling) 
+                     Creates a plot and gif given trajectory info. 
+                     Output will be written in a folder 'simple_plot_output'
+ 
+    trajectoryFile = A .txt or .csv file containing trajectory information
+                     in the comma seperated form delimited by a new line,
+                     'time, characterNumber, position[1], position[2], 
+                     velocity[1], velocity[2], linear[1], linear[2], 
+                     orientation, rotation, angular\n'
+ 
+    PVLO           = An array of 4 bools indicating what should be plotted. 
+ 
+                     Passing a four element array can be used to plot some
+                     values, but not others. The bools correspond in the
+                     order [position, velocity, linear, orientation].
+ 
+                     For example,
+                     If an array is passed like [1,1,1,0]; 
+                     position, velocity, and linear acceleration will be 
+                     plotted, but orientation will NOT be plotted.
+ 
+    gif            = Either a logical 1 or a logical 0. 
+                     If 1 a gif of the plots will be automatically generated.
+                     If 0 a gif will NOT be generated.
+ 
+    plotTitle      = A string containing the name of physics used.
+                     This string will be used in the plot title.
+ 
+    vectorScaling  = A value used to lengthen or shorten all vectors
+                     lengths. 
+                     Ex. 4 or 6 are good defaults.
+
+---------------------------------------------------------------------------------
+
+Below are some sample runtimes
+
+      NO GIFS GENERATED
+------------------------------
+1 character at 0.5 time step 
+
+	11 seconds of runtime.
+
+1 character at 0.25 time step 
+
+	20 seconds of runtime.
+
+2 characters at 0.5 time step 
+
+	11 seconds of runtime.
+
+2 characters at 0.25 time step 
+
+	20 seconds of runtime.
+
+
+     WITH GIFS GENERATED
+------------------------------
+1 character at 0.5 time step 
+
+	53 seconds of runtime.
+
+1 character at 0.25 time step 
+
+	130 seconds of runtime.
+
+2 characters at 0.5 time step 
+
+	84 seconds of runtime.
+
+2 characters at 0.25 time step 
+
+	225 seconds of runtime.

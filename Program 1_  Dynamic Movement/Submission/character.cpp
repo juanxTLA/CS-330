@@ -1,9 +1,8 @@
 #include "character.hpp"
-#include <iostream>
-#include <vector>
-#include <string>
 
 using namespace std;
+
+
 
 Character::Character(int uid, Coord vel, Coord position, Coord acc, 
                         rad orien, SteeringBehavior steer, bool col, Character* targ, float maxAcc, float maxVel){
@@ -17,21 +16,10 @@ Character::Character(int uid, Coord vel, Coord position, Coord acc,
     target = targ;
     maxLinear = maxAcc;
     maxVelocity = maxVel;
-}
-
-void Character::update(float deltaTime, Coord linear, rad angle){
-    pos = pos + (velocity * deltaTime);
-    velocity = velocity + (linear * deltaTime);
-    if(mod(velocity) > maxVelocity){
-        velocity.normalize();
-        velocity = velocity * maxVelocity;
-    } 
-
-
-    acceleration = linear;
-    orientation = angle;
     
 }
+
+//getters
 
 Coord Character::getPos(){
     return pos;
@@ -61,6 +49,35 @@ rad Character::getOrientation(){
     return orientation;
 }
 
+float Character::getArriveRadius(){
+    return arrivingRadius;
+}
+
+float Character::getSlowRadius(){
+    return slowingRadius;
+}
+
+float Character::getTime(){
+    return timeTarget;
+}
+
+float Character::getMaxVel(){
+    return maxVelocity;
+}
+
+Coord Character::getVelocity(){
+    return velocity;
+}
+//setters
+void Character::setRadius(float arr, float slow){
+    arrivingRadius = arr;
+    slowingRadius = slow;
+}
+
+void Character::setTime(float t){
+    timeTarget = t;
+}
+//rest
 std::string Character::printInfo(){
     std::string out;
     string col = colided ? "TRUE" : "FALSE";
@@ -69,4 +86,22 @@ std::string Character::printInfo(){
         + "," + to_string(orientation) + "," + to_string(steeringBehavior) + "," + col;
     
     return out;
+}
+
+void Character::update(float deltaTime, Coord linear, rad angle){
+    pos = pos + (velocity * deltaTime);
+    velocity = velocity + (linear * deltaTime);
+    if(mod(velocity) > maxVelocity){
+        velocity.normalize();
+        velocity = velocity * maxVelocity;
+    } 
+
+
+    acceleration = linear;
+    orientation = angle;
+
+    if(mod(velocity) <= MIN_VEL){
+        velocity = {0,0};
+    }
+    
 }

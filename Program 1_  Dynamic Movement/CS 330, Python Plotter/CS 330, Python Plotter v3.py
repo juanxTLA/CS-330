@@ -100,16 +100,16 @@ for mov in movers:
         label = "Continue"
     elif(m.behavior == 6):
         label = "Seek"
-    elif(m.behavior == 4):
+    elif(m.behavior == 7):
         label = "Flee"
-    elif(m.behavior == 5):
+    elif(m.behavior == 8):
         label = "Arrive"
 
     plt.annotate(label, color='red', xy=(m.x[0] + 2 , m.z[0] - 2))
 
     # add red dots to the start and end of each mover's trail
     plt.plot(m.x[0], m.z[0], color='red', marker='o', markerfacecolor='red', markersize=3)  #mark start position
-    plt.plot(m.x[-1], m.z[-1], color='red', marker='o', markerfacecolor='red', markersize=4) #mark end position
+    #plt.plot(m.x[-1], m.z[-1], color='red', marker='o', markerfacecolor='red', markersize=4) #mark end position
 
     # plot position
     plt.plot(m.x, m.z, color='red', linewidth=1)
