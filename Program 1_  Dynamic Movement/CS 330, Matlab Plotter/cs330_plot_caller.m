@@ -4,7 +4,7 @@
 %Input Vars
 
 %Replace with your filename inclding the file extension
-fileName = "test.txt";   
+fileName = "trajectory_data.txt";   
 
 PVLO = [1, 1, 1, 1];    %[position, velocity, linear, orientation]
 gifOn = 1;              %0 for NO gif; 1 for gif

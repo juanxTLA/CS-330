@@ -2,8 +2,6 @@
 
 using namespace std;
 
-
-
 Character::Character(int uid, Coord vel, Coord position, Coord acc, 
                         rad orien, SteeringBehavior steer, bool col, Character* targ, float maxAcc, float maxVel){
     id = uid;
@@ -20,7 +18,6 @@ Character::Character(int uid, Coord vel, Coord position, Coord acc,
 }
 
 //getters
-
 Coord Character::getPos(){
     return pos;
 }
@@ -88,7 +85,7 @@ std::string Character::printInfo(){
     return out;
 }
 
-void Character::update(float deltaTime, Coord linear, rad angle){
+void Character::update(float deltaTime, Coord linear){
     pos = pos + (velocity * deltaTime);
     velocity = velocity + (linear * deltaTime);
     if(mod(velocity) > maxVelocity){
@@ -98,7 +95,6 @@ void Character::update(float deltaTime, Coord linear, rad angle){
 
 
     acceleration = linear;
-    orientation = angle;
 
     if(mod(velocity) <= MIN_VEL){
         velocity = {0,0};

@@ -1,7 +1,13 @@
+// Project:  Programming assignment 1
+// Author:  Juan Tarrat and Julio Rivera
+
 #include "character.cpp"
 #include "helper.hpp"
 
+
 using namespace std;
+
+//this struct holds the different movement algorithms
 struct Dynamic{
 
     Coord seek(Character *target, Character mover){
@@ -23,7 +29,6 @@ struct Dynamic{
     Coord arrive(Character *target, Character mover){
         Coord linear = target->getPos() - mover.getPos();
         float dist = mod(linear);
-        cout << dist << endl;
 
         float arrSpeed;
 
@@ -37,7 +42,7 @@ struct Dynamic{
         arrVel.normalize();
         arrVel = arrVel * arrSpeed;
         linear = arrVel - mover.getVelocity();
-        linear = linear / mover.getMaxLinear();
+        linear = linear / mover.getTime();
         
         if(mod(linear) > mover.getMaxLinear()){
             linear.normalize();
@@ -50,8 +55,10 @@ struct Dynamic{
 };
 
 int main(){
+    //open output file
     ofstream outFile;
-    outFile.open("test.txt");
+    outFile.open("trajectory_data.txt");
+    //vector to store characters
     vector<Character> record;
 
     //Create continue character
@@ -62,28 +69,26 @@ int main(){
     Character seek = Character(2603, {0,8}, {-50,40}, {0,0}, 3*PI/2, SEEK, false, &cont, 2, 8);
     //create arrive character
     Character arrive = Character(2604, {-9,4}, {50,75}, {0,0}, PI, ARRIVE, false, &cont, 2, 10);
-
+    //set radius for arrive character
     arrive.setRadius(4, 32);
     arrive.setTime(1);
-
+    //store them in the vector
     record.push_back(cont);
     record.push_back(seek);
     record.push_back(flee);
     record.push_back(arrive);
 
     Dynamic movement;
-
+    //simulation variables
     double time = 0;
     double deltaTime = 0.5;
     double stopTime = 50;
 
-    float angle;
-
-    Character *targ;
-    Coord steer;
-
+    Character *targ; //target character helper variable
+    Coord steer; //this is where we will hold the Coordinates for the movement algorithms
+    //string to hold the character information
     string info;
-    seek.update(0,seek.getLinear(), seek.getOrientation());
+
     while(time < stopTime){
         time += deltaTime;
         for(int i = 0; i < record.size(); i++){
@@ -96,9 +101,7 @@ int main(){
                     targ = record[i].getTarget();
 
                     steer = movement.flee(targ, record[i]);
-                    
-                    angle = (tanl(steer.z/steer.x) * 180 * PI) - 90;
-                    record[i].update(deltaTime, steer, angle);
+                    record[i].update(deltaTime, steer);
                     info = record[i].printInfo();
                     outFile << time << "," << info << endl;
                     break;
@@ -108,8 +111,7 @@ int main(){
 
                     steer = movement.seek(targ, record[i]);
                     
-                    angle = (tanl(steer.z/steer.x) * 180 * PI) - 90;
-                    record[i].update(deltaTime, steer, angle);
+                    record[i].update(deltaTime, steer);
                     info = record[i].printInfo();
                     outFile << time << "," << info << endl;
                     break;
@@ -118,8 +120,7 @@ int main(){
                     targ = record[i].getTarget();
                     steer = movement.arrive(targ, record[i]);
                     
-                    angle = (tanl(steer.z/steer.x) * 180 * PI) - 90;
-                    record[i].update(deltaTime, steer, angle);
+                    record[i].update(deltaTime, steer);
                     info = record[i].printInfo();
                     outFile << time << "," << info << endl;
                     break;

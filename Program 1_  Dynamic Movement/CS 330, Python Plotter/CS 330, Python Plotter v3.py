@@ -17,7 +17,7 @@ import math
 
 
 # Change this to data file name
-filename = "test.txt" 
+filename = "trajectory_data.txt" 
 
 #************************** Setup Plotting Axis ****************************
 xLineX = [-100, 100]
@@ -129,7 +129,6 @@ plt.title('Dynamic Movement PVL Sample')
 plt.legend(bbox_to_anchor=(1.0, 0.05), loc='lower right')
 plt.xlim(-100, 100)
 plt.ylim(100, -100)
-#plt.show()
 plt.savefig("outputPlot.png",dpi=200)
 plt.show()
 
