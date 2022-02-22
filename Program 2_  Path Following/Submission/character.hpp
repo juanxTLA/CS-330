@@ -1,0 +1,49 @@
+
+#ifndef CHARACTER_HPP
+#define CHARACTER_HPP
+
+#include "helper.hpp"
+
+class Character{
+    private:
+        int id;
+        Coord velocity;
+        Coord pos;
+        Coord acceleration;
+        rad orientation;
+        SteeringBehavior steeringBehavior;
+        bool colided;
+        float maxLinear, maxVelocity, pathOffset;
+        Character* target;
+
+        float arrivingRadius, slowingRadius, timeTarget;
+    public:
+
+        //constructor
+        Character(int uid, Coord vel, Coord position, Coord acc, rad orien, SteeringBehavior steer, bool col, 
+                    Character* targ, float maxAcc, float maxVel);
+        
+
+        std::string printInfo();
+        void update(float deltaTime, Coord linear);
+
+        Coord getPos();
+        float getMaxLinear();
+        float getMaxVel();
+        int getId();
+        Character* getTarget();
+        SteeringBehavior getSteeringBehavior();
+        Coord getLinear();
+        rad getOrientation();
+        float getArriveRadius();
+        float getSlowRadius();
+        float getTime();
+        float getPathOffset();
+        Coord getVelocity();
+
+        void setRadius(float arr, float slow);
+        void setTime(float t);
+        void setPathOffset(float t);
+};
+
+#endif

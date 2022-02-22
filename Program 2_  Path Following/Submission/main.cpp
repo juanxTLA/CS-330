@@ -52,9 +52,21 @@ struct Dynamic{
         return linear;
 
     }
+
+    Coord followPath(Character mover, Path path){
+        float i = 1;
+        
+        float currentParam = getPathParam(path, mover.getPos());
+        float targetParam = min(i, currentParam + mover.getPathOffset());
+        Coord targetPos = getPathPos(path, targetParam);
+        //reimplement dynamic seeks
+        Coord linear = targetPos - mover.getPos();
+        linear.normalize();
+        linear = linear * mover.getMaxLinear();
+
+        return linear;
+    }
 };
-
-
 
 int main(){
     //open output file
@@ -62,66 +74,31 @@ int main(){
     outFile.open("trajectory_data.txt");
     //vector to store characters
     vector<Character> record;
+    vector<Coord> pts = {{0,90}, {-20, 65}, {20,40}, {-40,15}, 
+                        {40, -10}, {-60,-35}, {60, -60}, {0,-85}};
 
-    //Create continue character
-    Character cont = Character(2601, {-2,0}, {4,0}, {0,0}, 0, CONTINUE, false, NULL, 2,0);
-    //Create flee character
-    Character flee = Character(2602, {2,7}, {-30,-50}, {0,0}, PI/4, FLEE, false, &cont, 1.5, 8); 
-    //create seek character
-    Character seek = Character(2603, {0,0}, {0,-8}, {0,0}, 3*PI/2, SEEK, false, &cont, 1, 4);
-    //create arrive character
-    Character arrive = Character(2604, {-9,4}, {50,75}, {0,0}, PI, ARRIVE, false, &cont, 2, 10);
-    //set radius for arrive character
-    arrive.setRadius(4, 32);
-    arrive.setTime(1);
-    //store them in the vector
-    record.push_back(cont);
-    record.push_back(seek);
-    record.push_back(flee);
-    record.push_back(arrive);
+    Character follow(2701, {0,0}, {20,95}, {0,0}, 0, FOLLOW, false, NULL, 2, 4);
+    record.push_back(follow);
+    Path path = assemblePath(pts, 1);
 
     Dynamic movement;
     //simulation variables
     double time = 0;
     double deltaTime = 0.5;
-    double stopTime = 50;
+    double stopTime = 125;
 
     Character *targ; //target character helper variable
     Coord steer; //this is where we will hold the Coordinates for the movement algorithms
     //string to hold the character information
     string info;
-
+    
     while(time < stopTime){
         time += deltaTime;
         for(int i = 0; i < record.size(); i++){
-            switch(record[i].getSteeringBehavior()){
-                case CONTINUE:
-                    cont.update(deltaTime, {0,0});
-                    info = record[i].printInfo();
-                    outFile << time << "," << info << endl;
-                    break;
-                case FLEE:
-                    targ = record[i].getTarget();
-
-                    steer = movement.flee(targ, record[i]);
-                    record[i].update(deltaTime, steer);
-                    info = record[i].printInfo();
-                    outFile << time << "," << info << endl;
-                    break;
-                
-                case SEEK:
-                    targ = record[i].getTarget();
-
-                    steer = movement.seek(targ, record[i]);
+            switch (record[i].getSteeringBehavior()){
+                case FOLLOW:
                     
-                    record[i].update(deltaTime, steer);
-                    info = record[i].printInfo();
-                    outFile << time << "," << info << endl;
-                    break;
-
-                case ARRIVE:
-                    targ = record[i].getTarget();
-                    steer = movement.arrive(targ, record[i]);
+                    steer = movement.followPath(record[i], path);
                     
                     record[i].update(deltaTime, steer);
                     info = record[i].printInfo();
@@ -132,7 +109,6 @@ int main(){
 
     }
 
-    
     return 0;
 
 }
