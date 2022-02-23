@@ -78,6 +78,7 @@ int main(){
                         {40, -10}, {-60,-35}, {60, -60}, {0,-85}};
 
     Character follow(2701, {0,0}, {20,95}, {0,0}, 0, FOLLOW, false, NULL, 2, 4);
+    follow.setPathOffset(0.04);
     record.push_back(follow);
     Path path = assemblePath(pts, 1);
 
@@ -97,7 +98,6 @@ int main(){
         for(int i = 0; i < record.size(); i++){
             switch (record[i].getSteeringBehavior()){
                 case FOLLOW:
-                    
                     steer = movement.followPath(record[i], path);
                     
                     record[i].update(deltaTime, steer);

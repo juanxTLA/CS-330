@@ -70,7 +70,7 @@ inline Coord operator/(Coord const &a, float scalar){
 }
 
 inline float operator*(Coord const &a, Coord const &b){
-    return a.x * b.x + a.z * b.z;
+    return (a.x * b.x) + (a.z * b.z);
 }
 //collection of behaviors
 enum SteeringBehavior {
@@ -89,7 +89,7 @@ float distancePointPoint(Coord A, Coord B){
 }
 
 Coord closestPointSegment(Coord q, Coord a, Coord b){
-    float t = (q - a) * (b - a) / ((b - a) * (b - a));
+    float t = ((q - a) * (b - a)) / ((b - a) * (b - a));
 
     if(t <= 0) return a;
     else if (t >= 1) return b;
@@ -125,13 +125,17 @@ Path assemblePath(vector<Coord> p, int i){
 }
 
 Coord getPathPos(Path path, float param){
-    int i = 0;
-    while(path.param[i] < param) i++;
+    int j = 0;
+    for(int i = path.param.size() - 1; i >= 0; i--){
+        if(param > path.param[i]){
+            j = i;
+            break;
+        }
+    }
+    Coord a = path.points[j];
+    Coord b = path.points[j+1];
 
-    Coord a = path.points[i];
-    Coord b = path.points[i+1];
-
-    float t = (param - path.param[i]) / path.param[i + 1] - path.param[i];
+    float t = (param - path.param[j]) / (path.param[j + 1] - path.param[j]);
 
     return a + ((b - a) * t);
 }
