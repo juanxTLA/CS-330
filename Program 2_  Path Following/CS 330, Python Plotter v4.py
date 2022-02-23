@@ -33,6 +33,7 @@ yPath = [90,65,40,15,-10,-35,-60,-85]
 plt.plot(xLineX, xLineY, color='grey', linestyle='dashed', linewidth = 1)
 plt.plot(yLineX, yLineY, color='grey', linestyle='dashed', linewidth = 1)
 plt.plot(xPath, yPath, color = 'grey', linestyle = 'dashed', linewidth = 1)
+plt.scatter(xPath, yPath, color = 'grey', linestyle = 'dashed', linewidth = 1)
 
 # Mover class will hold data for each mover entity on the plot
 class Mover:
