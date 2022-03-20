@@ -2,9 +2,6 @@
 #define NODE_HPP
 
 #include "helper.hpp"
-#include "connection.hpp"
-
-
 
 class Node{
     private:
@@ -14,15 +11,10 @@ class Node{
         string name;
     
     public:
-        Node(int n, Coord p, int positionPlot, int posPlotName, string s){
-            number = n;
-            status, costSoFar, estHeuristic, estTotal = 0;
-            prevNode = NULL;
-            pos = p;
-            name = s;
-            plotPos = positionPlot;
-            namePlotPos = posPlotName;
-        }
+        Node(int n, Coord p, int positionPlot, int posPlotName, string s);
+        string printInfo();
+        
+        int getNumber();
 };
 
 #endif

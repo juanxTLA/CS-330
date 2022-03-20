@@ -2,8 +2,8 @@
 #define GRAPH_HPP
 
 #include "helper.hpp"
-#include "node.hpp"
-#include "connection.hpp"
+#include "node.cpp"
+#include "connection.cpp"
 #include <unordered_map>
 
 //We will store nodes in a map that contains nodes as keys and retrieves a connection object
@@ -11,18 +11,11 @@
 
 class Graph{
     private:
-        unordered_map<Node*, vector<Connection>> graph;
+        unordered_map<Node*, vector<Connection*>> graph;
 
     public:
-        Graph(){
-
-        }
-
-        void addNode(Node* n){
-            if(graph.find(n) != graph.end()){
-                graph[n].clear();
-            }
-        }
+        void addNode(Node* n);
+        void addConnection(Connection* c, Node* n);
 };
 
 
