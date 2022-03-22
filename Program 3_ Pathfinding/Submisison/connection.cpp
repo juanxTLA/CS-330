@@ -1,7 +1,7 @@
 #include "connection.hpp"
 
 Connection::Connection(int c, int n, int pos, int t, 
-                        Node* from, Node* to){
+                        int from, int to){
     cost = c;
     number = n;
     plotPos = pos;
@@ -28,10 +28,10 @@ int Connection::getPos(){
     return plotPos;
 }
 
-Node* Connection::getToNode(){
+int Connection::getToNode(){
     return toNode;
 }
 
-Node* Connection::getFromNode(){
+int Connection::getFromNode(){
     return fromNode;
 }

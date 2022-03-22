@@ -8,6 +8,7 @@
 #include <math.h>
 #include <algorithm>
 #include <unordered_map>
+
 //define global variables
 #define PI  3.1416
 #define MIN_VEL 0.02
@@ -169,5 +170,11 @@ float getPathParam(Path path, Coord pos){
 
 }
 
+enum NodeStatus{
+    UNDEFINED = 0,
+    UNVISITED = 1,
+    OPEN = 2,
+    CLOSED = 3
+};
 
 #endif

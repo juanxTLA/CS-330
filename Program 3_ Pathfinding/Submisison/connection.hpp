@@ -6,18 +6,18 @@
 class Connection{
     private:
         int cost, number, plotPos, type;
-        Node *fromNode, *toNode;
+        int fromNode, toNode;
     public:
         Connection(int c, int n, int pos1, int t, 
-                    Node* from, Node* to);
+                    int from, int to);
 
         int getCost();
         int getNumber();
         int getPos();
         int getType();
 
-        Node* getFromNode();
-        Node* getToNode();
+        int getFromNode();
+        int getToNode();
 };
 
 #endif

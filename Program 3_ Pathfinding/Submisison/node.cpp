@@ -2,16 +2,18 @@
 
 Node::Node(int n, Coord p, int positionPlot, int posPlotName, string s){
     number = n;
-    status = 0;
+    status = UNDEFINED;
     costSoFar = 0; 
     estHeuristic = 0;
     estTotal = 0;
-    prevNode = NULL;
+    prevNode = 0;
     pos = p;
     name = s;
     plotPos = positionPlot;
     namePlotPos = posPlotName;
 }
+
+Node::Node(){}
 
 string Node::printInfo(){
     std::string out;
@@ -25,3 +27,44 @@ string Node::printInfo(){
 int Node::getNumber(){
     return number;
 }
+
+Coord Node::getPos(){
+    return pos;
+}
+
+int Node::getTotal(){
+    return estTotal;
+}
+
+int Node::getCostSoFar(){
+    return costSoFar;
+}
+
+int Node::getStatus(){
+    return status;
+}
+
+int Node::getPrevNode(){
+    return prevNode;
+}
+
+void Node::setCostSoFar(int n){
+    costSoFar = n;
+}
+
+void Node::setStatus(int n){
+    status = n;
+}
+
+void Node::setHeuristic(float n){
+    estHeuristic = n;
+}
+
+void Node::updateTotal(){
+    estTotal = estHeuristic + costSoFar;
+}
+
+void Node::setPrevNode(int n){
+    prevNode = n;
+}
+

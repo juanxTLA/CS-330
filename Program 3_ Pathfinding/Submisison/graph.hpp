@@ -11,11 +11,18 @@
 
 class Graph{
     private:
-        unordered_map<Node*, vector<Connection*>> graph;
+        unordered_map<int, vector<Connection>> graph;
+        unordered_map<int, Node> nodes;
 
     public:
-        void addNode(Node* n);
-        void addConnection(Connection* c, Node* n);
+        Graph();
+        void addNode(int n);
+        void addConnection(Connection c, int n);
+        void addNodeCollection(unordered_map<int, Node> n);
+        void initializeNodes();
+        Node getNode(int id);
+
+        vector<Connection> getConnections(int n);
 };
 
 
